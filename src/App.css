@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+.movie-container{
+  /*background-color: crimson;*/
+  width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.movie-poster{
+  height: 550px;
+  width: 400px;
+  object-fit: cover;  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.movie-specs{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  border-radius: 10px;
+
 }
 
-.App-link {
-  color: #61dafb;
-}
+.movie-name{
+  font-size: 24px;
+  margin-top: 0px;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+}
+.movie-rating{
+  margin-top: 0px;
+  font-size: 18px;
+}
+.movie-summary{
+  margin-top: 0px;
+  overflow: hidden;
+}
+body{
+  margin: 20px;
+  background-color: whitesmoke;
+  font-family: 'Poppins', sans-seri;
+}
+.movie-list{
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.counter-container{
+  display: flex;
+  gap: 10px;
+}
+.like-dislike{
+  font-size: 20px;
+}
+.movie-show-button{
+  margin-bottom: 10px;
+  font-size: 18px;
 }
