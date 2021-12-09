@@ -1,5 +1,9 @@
+import { useState } from 'react'
 import './App.css';
 import { MovieList } from './MovieList';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
 
 function App() {
   const movies = [
@@ -79,10 +83,40 @@ function App() {
   return (
     <div className="App">
       <MovieList movies={movies} />
+      <AddColor />
     </div>
   );
 }
 
+function AddColor() {
+  const [color, setColor] = useState("grey");
+  const styles = { backgroundColor: color };
+  const [colors, setColors] = useState(["teal", "orange", "yellow"]);
+  return (
+    <div className="add-color-form">
 
+      <TextField value={color} onChange={(event) => setColor(event.target.value)}
+        style={styles} id="standard-basic" label="Enter a color" variant="standard" />
+
+      <Button onClick={() => setColors([...colors, color])} variant="outlined">Add color</Button>
+      {colors.map((clr) => (
+        <ColorBox color={clr} />
+      ))}
+    </div>
+  );
+}
+
+function ColorBox({ color }) {
+  const styles = {
+    backgroundColor: color,
+    height: "25px",
+    width: "120px",
+    marginTop: "10px"
+  }
+
+  return <div style={styles}></div>;
+}
 
 export default App;
+
+
