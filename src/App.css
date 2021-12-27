@@ -2,6 +2,9 @@
   /*background-color: crimson;*/
   width: 400px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: max-content;
+  /*max-content give space upto the words in summary*/
+  /*if max-content is removed all the container will be in same height*/
 }
 .movie-poster{
   height: 550px;
@@ -19,6 +22,8 @@
 .movie-name{
   font-size: 24px;
   margin-top: 0px;
+  max-width: 70%;
+  /*if movie name is high by giving max-width: 70%; it will come down */
 
 }
 .movie-rating{
@@ -57,4 +62,8 @@ body{
   gap: 10px;
   flex-direction: column;
   width: 120px;
+}
+
+.add-movie-form{
+  margin: 20px;
 }

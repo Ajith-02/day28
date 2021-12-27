@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 
 
 function App() {
-  const movies = [
+  const INITIAL_MOVIES = [
     {
       poster: "https://moviegalleri.net/wp-content/uploads/2020/01/Hero-Suriya-Soorarai-Pottru-Movie-Teaser-Release-Jan-7th-Poster-HD.jpg",
       name: "Soorarai Pottru",
@@ -80,10 +80,37 @@ function App() {
       summary: "Lord Shiva crashes four friends' bachelor party as he wants to recruit four mortals. After a night of debauchery, they wake up on a deserted island with no memory of how they got there."
     },
   ];
+
+  const [name, setName] = useState("");
+  const [poster, setPoster] = useState("");
+  const [rating, setRating] = useState("");
+  const [summary, setSummary] = useState("");
+
+  const [movies, setMovies] = useState(INITIAL_MOVIES)
+  const addMovies = () => {
+
+    const newMovie = {
+      name: name,
+      poster: poster,
+      rating: rating,
+      summary: summary
+    };
+    console.log(newMovie);
+    {/*Now copy the movie list and then add a new movie*/ }
+    setMovies([...movies, newMovie]);
+  };
+
   return (
     <div className="App">
+        <div className="add-movie-form" >
+        <input value={name} onChange={(event) => setName(event.target.value)} placeholder='Enter movie Name' ></input>
+        <input value={poster} onChange={(event) => setPoster(event.target.value)} placeholder='Enter movie Poster'></input>
+        <input value={rating} onChange={(event) => setRating(event.target.value)} placeholder='Enter movie Rating'></input>
+        <input value={summary} onChange={(event) => setSummary(event.target.value)} placeholder='Enter movie Summary'></input>
+        <button onClick={addMovies}>Add Movie</button>
+      </div>
       <MovieList movies={movies} />
-      <AddColor />
+      {/*<AddColor />*/}
     </div>
   );
 }
@@ -99,8 +126,8 @@ function AddColor() {
         style={styles} id="standard-basic" label="Enter a color" variant="standard" />
 
       <Button onClick={() => setColors([...colors, color])} variant="outlined">Add color</Button>
-      {colors.map((clr) => (
-        <ColorBox color={clr} />
+      {colors.map((clr, index) => (
+        <ColorBox key={index} color={clr} />
       ))}
     </div>
   );
