@@ -103,17 +103,25 @@ function App() {
   return (
     <div className="App">
         <div className="add-movie-form" >
+          <TextField value={name} onChange={(event) => setName(event.target.value)} label="Enter movie Name" variant="standard" />
+          <TextField value={poster} onChange={(event) => setPoster(event.target.value)} label="Enter movie Poster" variant="standard" />
+          <TextField value={rating} onChange={(event) => setRating(event.target.value)} label="Enter movie Rating" variant="standard" />
+          <TextField value={summary} onChange={(event) => setSummary(event.target.value)} label="Enter movie Summary" variant="standard" />
+          <Button onClick={addMovies} variant="outlined">Add Movie</Button>
+           {/* 
         <input value={name} onChange={(event) => setName(event.target.value)} placeholder='Enter movie Name' ></input>
         <input value={poster} onChange={(event) => setPoster(event.target.value)} placeholder='Enter movie Poster'></input>
         <input value={rating} onChange={(event) => setRating(event.target.value)} placeholder='Enter movie Rating'></input>
         <input value={summary} onChange={(event) => setSummary(event.target.value)} placeholder='Enter movie Summary'></input>
-        <button onClick={addMovies}>Add Movie</button>
+        <button onClick={addMovies}>Add Movie</button>  */}
       </div>
       <MovieList movies={movies} />
       {/*<AddColor />*/}
     </div>
   );
 }
+
+
 
 function AddColor() {
   const [color, setColor] = useState("grey");
