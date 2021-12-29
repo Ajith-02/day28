@@ -86,3 +86,8 @@ nav{
   text-align: center;
   color: teal;
 }
+
+.movie-details-container{
+  padding: 24px;
+  /*max-width: 50rem;*/
+}
