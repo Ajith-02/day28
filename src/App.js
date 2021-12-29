@@ -3,7 +3,7 @@ import './App.css';
 import { MovieList } from './MovieList';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 
 function App() {
   const INITIAL_MOVIES = [
@@ -81,12 +81,72 @@ function App() {
     },
   ];
 
+
+
+  const [movies, setMovies] = useState(INITIAL_MOVIES)
+
+  return (
+    <div className="App">
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/movies">Movies</Link>
+        <Link to="/add-movies">Add Movies</Link>
+        <Link to="/color-game">Color game</Link>
+      </nav>
+
+      <Switch>
+        {/*Route matches with the substring, if we give path="/" in top, all the pages will bw blank */}
+        {/* or if you want to keep in to use "exact" <Route exact path="/"><Welcone /></Route> it matches the exact  */}
+        {/*if suppose changing the path / movies to /films,
+           if we change directly it will affect the existing user
+           We need to use Redirect, add Redirect in import */}
+        <Route path="/films">
+          <Redirect to="/movies" />
+        </Route>
+        <Route path="/movies/:id">
+          Movie Details
+        </Route>
+        <Route path="/movies">
+          <MovieList movies={movies} />
+        </Route>
+        <Route path="/add-movies">
+          <AddMovie movies={movies} setMovies={setMovies} />
+        </Route>
+        <Route path="/color-game">
+          <AddColor />
+        </Route>
+        <Route exact path="/"><Welcone /></Route>
+        <Route path="**"><NotFound /></Route>
+      </Switch>
+
+    </div>
+  );
+}
+
+function Welcone() {
+  return (
+    <h2>Welcome to Route</h2>
+  )
+}
+
+function NotFound() {
+  return (
+    <div className="not-found-container" >
+      <h2>Not Found 404</h2>
+      <img className="not-found-image" src="https://klizos.com/wp-content/uploads/funny-404-error-page-GIF-klizo-solutions.gif"
+        alt="Not Found 404" />
+    </div>
+  )
+}
+
+//when two components needs the same data(movies), put the data in the common parent component (App)
+// this is called HOC - Higher Order Components
+function AddMovie({ movies, setMovies }) {
   const [name, setName] = useState("");
   const [poster, setPoster] = useState("");
   const [rating, setRating] = useState("");
   const [summary, setSummary] = useState("");
 
-  const [movies, setMovies] = useState(INITIAL_MOVIES)
   const addMovies = () => {
 
     const newMovie = {
@@ -96,32 +156,22 @@ function App() {
       summary: summary
     };
     console.log(newMovie);
-    {/*Now copy the movie list and then add a new movie*/ }
+    //Now copy the movie list and then add a new movie
     setMovies([...movies, newMovie]);
   };
 
   return (
-    <div className="App">
-        <div className="add-movie-form" >
-          <TextField value={name} onChange={(event) => setName(event.target.value)} label="Enter movie Name" variant="standard" />
-          <TextField value={poster} onChange={(event) => setPoster(event.target.value)} label="Enter movie Poster" variant="standard" />
-          <TextField value={rating} onChange={(event) => setRating(event.target.value)} label="Enter movie Rating" variant="standard" />
-          <TextField value={summary} onChange={(event) => setSummary(event.target.value)} label="Enter movie Summary" variant="standard" />
-          <Button onClick={addMovies} variant="outlined">Add Movie</Button>
-           {/* 
-        <input value={name} onChange={(event) => setName(event.target.value)} placeholder='Enter movie Name' ></input>
-        <input value={poster} onChange={(event) => setPoster(event.target.value)} placeholder='Enter movie Poster'></input>
-        <input value={rating} onChange={(event) => setRating(event.target.value)} placeholder='Enter movie Rating'></input>
-        <input value={summary} onChange={(event) => setSummary(event.target.value)} placeholder='Enter movie Summary'></input>
-        <button onClick={addMovies}>Add Movie</button>  */}
-      </div>
-      <MovieList movies={movies} />
-      {/*<AddColor />*/}
+    <div className="add-movie-form" >
+      <TextField value={name} onChange={(event) => setName(event.target.value)} label="Enter movie Name" variant="standard" />
+      <TextField value={poster} onChange={(event) => setPoster(event.target.value)} label="Enter movie Poster" variant="standard" />
+      <TextField value={rating} onChange={(event) => setRating(event.target.value)} label="Enter movie Rating" variant="standard" />
+      <TextField value={summary} onChange={(event) => setSummary(event.target.value)} label="Enter movie Summary" variant="standard" />
+      <Button onClick={addMovies} variant="outlined">Add Movie</Button>
+
     </div>
-  );
+  )
+
 }
-
-
 
 function AddColor() {
   const [color, setColor] = useState("grey");
@@ -154,4 +204,14 @@ function ColorBox({ color }) {
 
 export default App;
 
+// Different pages - why?
+//1. Readability - Ease of access
+//2. Performance - Load only the page requested(about, contact)
+//3. Sharing - link(share the exact page we look)
 
+
+// SPA - Single page application 
+// in React we have only one html
+// React Router will create multiple pages 
+// router is a big conditional rendering
+//

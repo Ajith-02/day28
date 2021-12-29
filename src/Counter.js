@@ -2,7 +2,7 @@ import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
+//import MailIcon from '@mui/icons-material/Mail';
 
 //two types of import and export
 //1. named import and export - this is latest
