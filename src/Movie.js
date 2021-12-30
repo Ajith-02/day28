@@ -7,6 +7,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+
 import InfoIcon from '@mui/icons-material/Info';
 import { useHistory } from "react-router-dom";
 
@@ -14,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 
 
-export function Movie({ name, rating, summary, poster, id }) {
+export function Movie({ name, rating, summary, poster, id, deleteButton, editButton }) {
   const [show, setShow] = useState(true);
   const history = useHistory()
   //conditional styling
@@ -51,7 +52,7 @@ export function Movie({ name, rating, summary, poster, id }) {
         </div>
         {/*//conditional rendering*/}
         {show ? <p className="movie-summary"> {summary}</p> : ""}
-        <Counter />
+        <Counter /> {deleteButton } {editButton }
       </CardContent>
     </Card>
   );
