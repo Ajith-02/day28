@@ -52,7 +52,7 @@ export function Movie({ name, rating, summary, poster, id, deleteButton, editBut
         </div>
         {/*//conditional rendering*/}
         {show ? <p className="movie-summary"> {summary}</p> : ""}
-        <Counter /> {deleteButton } {editButton }
+        <Counter /> {editButton } {deleteButton } 
       </CardContent>
     </Card>
   );

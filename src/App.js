@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import './App.css';
 import { MovieList } from './MovieList';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Switch, Route, Link, Redirect, useParams } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { AddColor } from './AddColor';
+import { AddMovie } from './AddMovie';
+import { NotFound } from './NotFound';
+import { Welcone } from './Welcone';
+import { MovieDetails } from './MovieDetails';
+import { EditMovie } from './EditMovie';
+
+
 
 function App() {
   const INITIAL_MOVIES = [
@@ -109,11 +115,16 @@ function App() {
         <Route path="/films">
           <Redirect to="/movies" />
         </Route>
+        <Route path="/movies/edit/:id">
+        <EditMovie movies={movies} setMovies={setMovies}/>
+          <MovieDetails movies={movies} />
+          </Route>
         <Route path="/movies/:id">
+          
           <MovieDetails movies={movies} />
         </Route>
         <Route path="/movies">
-          <MovieList movies={movies} />
+          <MovieList movies={movies} setMovies={setMovies} />
         </Route>
         <Route path="/add-movies">
           <AddMovie movies={movies} setMovies={setMovies} />
@@ -127,114 +138,6 @@ function App() {
 
     </div>
   );
-}
-
-function MovieDetails({ movies }) {
-  const { id } = useParams();
-  const movie = movies[id];
-  const styles = {
-    color: movie.rating < 8 ? "crimson" : "green",
-    fontWeight: "bold",
-  };
-
-  return (
-    <div className="movie-details-container">
-      <iframe width="100%" height="540" 
-      src= {movie.trailer}
-      title="YouTube video player" 
-      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen></iframe>
-
-      <div className="movie-specs">
-
-        <h3 className="movie-name">
-          {movie.name} </h3>
-
-        <p className="movie-rating" style={styles}> ⭐ {movie.rating}</p>
-
-        <p className="movie-summary"> {movie.summary}</p>
-      </div>
-    </div>
-  );
-}
-
-function Welcone() {
-  return (
-    <h2>Welcome to Route</h2>
-  )
-}
-
-function NotFound() {
-  return (
-    <div className="not-found-container" >
-      <h2>Not Found 404</h2>
-      <img className="not-found-image" src="https://klizos.com/wp-content/uploads/funny-404-error-page-GIF-klizo-solutions.gif"
-        alt="Not Found 404" />
-    </div>
-  )
-}
-
-//when two components needs the same data(movies), put the data in the common parent component (App)
-// this is called HOC - Higher Order Components
-function AddMovie({ movies, setMovies }) {
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-
-  const addMovies = () => {
-
-    const newMovie = {
-      name: name,
-      poster: poster,
-      rating: rating,
-      summary: summary
-    };
-    console.log(newMovie);
-    //Now copy the movie list and then add a new movie
-    setMovies([...movies, newMovie]);
-  };
-
-  return (
-    <div className="add-movie-form" >
-      <TextField value={name} onChange={(event) => setName(event.target.value)} label="Enter movie Name" variant="standard" />
-      <TextField value={poster} onChange={(event) => setPoster(event.target.value)} label="Enter movie Poster" variant="standard" />
-      <TextField value={rating} onChange={(event) => setRating(event.target.value)} label="Enter movie Rating" variant="standard" />
-      <TextField value={summary} onChange={(event) => setSummary(event.target.value)} label="Enter movie Summary" variant="standard" />
-      <Button onClick={addMovies} variant="outlined">Add Movie</Button>
-
-    </div>
-  )
-
-}
-
-function AddColor() {
-  const [color, setColor] = useState("grey");
-  const styles = { backgroundColor: color };
-  const [colors, setColors] = useState(["teal", "orange", "yellow"]);
-  return (
-    <div className="add-color-form">
-
-      <TextField value={color} onChange={(event) => setColor(event.target.value)}
-        style={styles} id="standard-basic" label="Enter a color" variant="standard" />
-
-      <Button onClick={() => setColors([...colors, color])} variant="outlined">Add color</Button>
-      {colors.map((clr, index) => (
-        <ColorBox key={index} color={clr} />
-      ))}
-    </div>
-  );
-}
-
-function ColorBox({ color }) {
-  const styles = {
-    backgroundColor: color,
-    height: "25px",
-    width: "120px",
-    marginTop: "10px"
-  }
-
-  return <div style={styles}></div>;
 }
 
 export default App;
