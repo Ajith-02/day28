@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useHistory } from "react-router-dom";
+
 
 //when two components needs the same data(movies), put the data in the common parent component (App)
 // this is called HOC - Higher Order Components
 export function AddMovie({ movies, setMovies }) {
+  const history = useHistory()
+
   const [name, setName] = useState("");
   const [poster, setPoster] = useState("");
   const [rating, setRating] = useState("");
@@ -24,6 +28,8 @@ export function AddMovie({ movies, setMovies }) {
     console.log(newMovie);
     //Now copy the movie list and then add a new movie
     setMovies([...movies, newMovie]);
+    history.push("/movies")
+
   };
 
   return (
