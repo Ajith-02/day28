@@ -140,6 +140,7 @@ function App() {
       <Paper elevation={2} style={{ borderRadius : "0px", minHeight : "100vh" }}>
 
       <div className="App">
+        
         <AppBar position="static" style={{ marginBottom: "16px" }}>
           <Toolbar variant="dense">
             <Button
@@ -171,6 +172,13 @@ function App() {
               Color game
             </Button>
             <Button
+              onClick={() => history.push("/tic-tac-toe")}
+              variant="text"
+              color="inherit"
+            >
+              Tictactoe game
+            </Button>
+            <Button
               startIcon={
                 mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
               }
@@ -179,7 +187,7 @@ function App() {
               variant="text"
               color="inherit"
             >
-              {mode === "Light" ? "Dark" : "Light"} mode
+              {mode === "Light" ? "Dark" : "Light"} mode  
             </Button>
           </Toolbar>
         </AppBar>
@@ -215,6 +223,9 @@ function App() {
           <Route path="/color-game">
             <AddColor />
           </Route>
+          <Route path="/tic-tac-toe">
+            <Tictactoe />
+          </Route>
           <Route exact path="/">
             <Welcone />
           </Route>
@@ -228,6 +239,30 @@ function App() {
     </ThemeProvider>
   );
 }
+
+function Tictactoe(){
+  const [board, setBoard] = useState([null,null,null,null,null,null,null,null,null])
+  return(
+    <div className="board" >
+      {board.map((val) => ( <GameBox/>))}
+     
+      </div>
+   
+  );
+} 
+
+function GameBox() {
+  const [val, setVal] = useState(null);
+  const styles = { color: val === "X" ? "green" : "red" };
+  return(
+    
+ <div style = {styles} onClick={()=> setVal(val === "X" ? "O" : "X")}
+  className="game-box">{val}</div>
+
+  );
+}
+
+// Toggle between X & O (onClick of the div)  
 
 export default App;
 
