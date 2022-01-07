@@ -16,8 +16,9 @@ import { useHistory } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import Paper from '@mui/material/Paper';
-
+import Paper from "@mui/material/Paper";
+import useWindowSize from "react-use/lib/useWindowSize"
+import Confetti from "react-confetti"
 
 function App() {
   const INITIAL_MOVIES = [
@@ -137,132 +138,190 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper elevation={2} style={{ borderRadius : "0px", minHeight : "100vh" }}>
-
-      <div className="App">
-        
-        <AppBar position="static" style={{ marginBottom: "16px" }}>
-          <Toolbar variant="dense">
-            <Button
-              onClick={() => history.push("/")}
-              variant="text"
-              color="inherit"
-            >
-              Home
-            </Button>
-            <Button
-              onClick={() => history.push("/movies")}
-              variant="text"
-              color="inherit"
-            >
-              Movies
-            </Button>
-            <Button
-              onClick={() => history.push("/add-movies")}
-              variant="text"
-              color="inherit"
-            >
-              Add Movies
-            </Button>
-            <Button
-              onClick={() => history.push("/color-game")}
-              variant="text"
-              color="inherit"
-            >
-              Color game
-            </Button>
-            <Button
-              onClick={() => history.push("/tic-tac-toe")}
-              variant="text"
-              color="inherit"
-            >
-              Tictactoe game
-            </Button>
-            <Button
-              startIcon={
-                mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
-              }
-              style={{ marginLeft: "auto" }}
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
-              variant="text"
-              color="inherit"
-            >
-              {mode === "Light" ? "Dark" : "Light"} mode  
-            </Button>
-          </Toolbar>
-        </AppBar>
-        {/*<nav>
+      <Paper elevation={2} style={{ borderRadius: "0px", minHeight: "100vh" }}>
+        <div className="App">
+          <AppBar position="static" style={{ marginBottom: "16px" }}>
+            <Toolbar variant="dense">
+              <Button
+                onClick={() => history.push("/")}
+                variant="text"
+                color="inherit"
+              >
+                Home
+              </Button>
+              <Button
+                onClick={() => history.push("/movies")}
+                variant="text"
+                color="inherit"
+              >
+                Movies
+              </Button>
+              <Button
+                onClick={() => history.push("/add-movies")}
+                variant="text"
+                color="inherit"
+              >
+                Add Movies
+              </Button>
+              <Button
+                onClick={() => history.push("/color-game")}
+                variant="text"
+                color="inherit"
+              >
+                Color game
+              </Button>
+              <Button
+                onClick={() => history.push("/tic-tac-toe")}
+                variant="text"
+                color="inherit"
+              >
+                Tictactoe game
+              </Button>
+              <Button
+                startIcon={
+                  mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />
+                }
+                style={{ marginLeft: "auto" }}
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                variant="text"
+                color="inherit"
+              >
+                {mode === "Light" ? "Dark" : "Light"} mode
+              </Button>
+            </Toolbar>
+          </AppBar>
+          {/*<nav>
         <Link to="/">Home</Link>
         <Link to="/movies">Movies</Link>
         <Link to="/add-movies">Add Movies</Link>
         <Link to="/color-game">Color game</Link>
       </nav>*/}
 
-        <Switch>
-          {/*Route matches with the substring, if we give path="/" in top, all the pages will bw blank */}
-          {/* or if you want to keep in to use "exact" <Route exact path="/"><Welcone /></Route> it matches the exact  */}
-          {/*if suppose changing the path / movies to /films,
+          <Switch>
+            {/*Route matches with the substring, if we give path="/" in top, all the pages will bw blank */}
+            {/* or if you want to keep in to use "exact" <Route exact path="/"><Welcone /></Route> it matches the exact  */}
+            {/*if suppose changing the path / movies to /films,
            if we change directly it will affect the existing user
            We need to use Redirect, add Redirect in import */}
-          <Route path="/films">
-            <Redirect to="/movies" />
-          </Route>
-          <Route path="/movies/edit/:id">
-            <EditMovie movies={movies} setMovies={setMovies} />
-            <MovieDetails movies={movies} />
-          </Route>
-          <Route path="/movies/:id">
-            <MovieDetails movies={movies} />
-          </Route>
-          <Route path="/movies">
-            <MovieList movies={movies} setMovies={setMovies} />
-          </Route>
-          <Route path="/add-movies">
-            <AddMovie movies={movies} setMovies={setMovies} />
-          </Route>
-          <Route path="/color-game">
-            <AddColor />
-          </Route>
-          <Route path="/tic-tac-toe">
-            <Tictactoe />
-          </Route>
-          <Route exact path="/">
-            <Welcone />
-          </Route>
-          <Route path="**">
-            <NotFound />
-          </Route>
-        </Switch>
-      </div>
-      </Paper >
-
+            <Route path="/films">
+              <Redirect to="/movies" />
+            </Route>
+            <Route path="/movies/edit/:id">
+              <EditMovie movies={movies} setMovies={setMovies} />
+              <MovieDetails movies={movies} />
+            </Route>
+            <Route path="/movies/:id">
+              <MovieDetails movies={movies} />
+            </Route>
+            <Route path="/movies">
+              <MovieList movies={movies} setMovies={setMovies} />
+            </Route>
+            <Route path="/add-movies">
+              <AddMovie movies={movies} setMovies={setMovies} />
+            </Route>
+            <Route path="/color-game">
+              <AddColor />
+            </Route>
+            <Route path="/tic-tac-toe">
+              <Tictactoe />
+            </Route>
+            <Route exact path="/">
+              <Welcone />
+            </Route>
+            <Route path="**">
+              <NotFound />
+            </Route>
+          </Switch>
+        </div>
+      </Paper>
     </ThemeProvider>
   );
 }
 
-function Tictactoe(){
-  const [board, setBoard] = useState([null,null,null,null,null,null,null,null,null])
-  return(
-    <div className="board" >
-      {board.map((val) => ( <GameBox/>))}
-     
-      </div>
-   
-  );
-} 
+function Tictactoe() {
+  const { width, height } = useWindowSize();
 
-function GameBox() {
-  const [val, setVal] = useState(null);
-  const styles = { color: val === "X" ? "green" : "red" };
-  return(
+  const [board, setBoard] = useState([
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
+
+  const [isXTurn, setIsXTurn] = useState(true);
+  const handleClick = (index) => {
+    //Create a copy of the board & then update the clicked box
+    // update only untouched box
+    // update only untouched box & until no winner
+    //if (!board[index]) also can code like this
+    if (winner === null && board[index] === null) {
+      const boardCopy = [...board];
+      boardCopy[index] = isXTurn ? "X" : "O";
+      setBoard(boardCopy);
+      //Toggle X turn
+      setIsXTurn(!isXTurn);
+    }
+  };
+
+  const decideWinner = (board) => {
+
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    //if winning condition present in board the we have a winner
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (board[a] !== null && board[a] === board[b] && board[b] === board[c]) {
+        console.log("winner is:", board[a]);
+        return board[a];
+      }
+    }
+    return null;
+  };
+  const winner = decideWinner(board);
+//conditional rendering for Confetti
+  return (
+    <div className="full-game" >  
     
- <div style = {styles} onClick={()=> setVal(val === "X" ? "O" : "X")}
-  className="game-box">{val}</div>
-
+    { winner ? <Confetti
+      width={width}
+      height={height} 
+      
+      gravity={0.3}/> : "" 
+    }
+       <div className="board">
+      {board.map((val, index) => (
+        <GameBox val={val} onPlayerClick={() => handleClick(index)} />
+      ))}
+    </div>
+    {winner ? <h2>Winner is:{winner}</h2> : "" }
+    </div>
   );
 }
 
-// Toggle between X & O (onClick of the div)  
+function GameBox({ onPlayerClick, val }) {
+  //const [val, setVal] = useState(null);
+  const styles = { color: val === "X" ? "green" : "red" };
+  return (
+    <div style={styles} onClick={onPlayerClick} className="game-box">
+      {val}
+    </div>
+  );
+}
+
+// Toggle between X & O (onClick of the div)
 
 export default App;
 
@@ -275,4 +334,4 @@ export default App;
 // in React we have only one html
 // React Router will create multiple pages
 // router is a big conditional rendering
-//
+

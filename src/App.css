@@ -110,3 +110,11 @@ nav{
   /*grid-template-columns: repeat(3, 1fr);*/
   width: min-content;
 }
+
+.full-game{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

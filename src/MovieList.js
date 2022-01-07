@@ -45,3 +45,4 @@ export function MovieList({ movies, setMovies }) {
     </section>
   );
 }
+
