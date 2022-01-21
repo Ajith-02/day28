@@ -19,8 +19,10 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Paper from "@mui/material/Paper";
 import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
+import { useEffect } from 'react';
 
 function App() {
+  /*
   const INITIAL_MOVIES = [
     {
       poster:
@@ -124,9 +126,9 @@ function App() {
       summary:
         "Lord Shiva crashes four friends' bachelor party as he wants to recruit four mortals. After a night of debauchery, they wake up on a deserted island with no memory of how they got there.",
     },
-  ];
-
-  const [movies, setMovies] = useState(INITIAL_MOVIES);
+  ]; */
+ 
+  const [movies, setMovies] = useState([]);
   const history = useHistory();
   const [mode, setMode] = useState("dark");
 
@@ -135,6 +137,17 @@ function App() {
       mode: mode,
     },
   });
+// calling fetch api only once, when it is mounted(loaded)
+//for this use useEffect
+// to call once the dependency array is [](because we calling once) 
+// the dependency details in slide
+//use useEffect to get data from API
+useEffect(() => {
+  fetch("https://61e90c217ced4a00172ff7ad.mockapi.io/movie")
+  .then((data) => data.json())
+  .then((mvs) => setMovies(mvs));
+}, []);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -322,6 +335,9 @@ function GameBox({ onPlayerClick, val }) {
 }
 
 // Toggle between X & O (onClick of the div)
+
+
+
 
 export default App;
 
