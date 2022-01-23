@@ -19,7 +19,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Paper from "@mui/material/Paper";
 import useWindowSize from "react-use/lib/useWindowSize"
 import Confetti from "react-confetti"
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 
 function App() {
   /*
@@ -142,11 +142,6 @@ function App() {
 // to call once the dependency array is [](because we calling once) 
 // the dependency details in slide
 //use useEffect to get data from API
-useEffect(() => {
-  fetch("https://61e90c217ced4a00172ff7ad.mockapi.io/movie")
-  .then((data) => data.json())
-  .then((mvs) => setMovies(mvs));
-}, []);
 
 
   return (
@@ -227,9 +222,11 @@ useEffect(() => {
               <MovieDetails movies={movies} />
             </Route>
             <Route path="/movies">
-              <MovieList movies={movies} setMovies={setMovies} />
+            {/*<MovieList movies={movies} setMovies={setMovies} />*/}
+              <MovieList  />
             </Route>
             <Route path="/add-movies">
+           {/* <AddMovie movies={movies} setMovies={setMovies} /> */}
               <AddMovie movies={movies} setMovies={setMovies} />
             </Route>
             <Route path="/color-game">
