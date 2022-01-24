@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 //when two components needs the same data(movies), put the data in the common parent component (App)
 // this is called HOC - Higher Order Components
-export function AddMovie({ movies, setMovies }) {
+export function AddMovie( ) {
   const history = useHistory()
 
   const [name, setName] = useState("");
@@ -27,8 +27,20 @@ export function AddMovie({ movies, setMovies }) {
     };
     console.log(newMovie);
     //Now copy the movie list and then add a new movie
-    setMovies([...movies, newMovie]);
-    history.push("/movies")
+    //setMovies([...movies, newMovie]);
+    
+    //1. method -  post
+    //2. body - data -JSON
+    //3. Header - JSON
+    fetch("https://61e90c217ced4a00172ff7ad.mockapi.io/movie",
+    {
+      method: "POST",
+      body: JSON.stringify(newMovie),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(()=> history.push("/movies"));
+  
 
   };
 
@@ -46,3 +58,4 @@ export function AddMovie({ movies, setMovies }) {
   );
 
 }
+

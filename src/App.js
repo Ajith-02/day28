@@ -128,7 +128,7 @@ function App() {
     },
   ]; */
  
-  const [movies, setMovies] = useState([]);
+  //const [movies, setMovies] = useState([]);
   const history = useHistory();
   const [mode, setMode] = useState("dark");
 
@@ -215,11 +215,12 @@ function App() {
               <Redirect to="/movies" />
             </Route>
             <Route path="/movies/edit/:id">
-              <EditMovie movies={movies} setMovies={setMovies} />
-              <MovieDetails movies={movies} />
+              {/*<EditMovie movies={movies} setMovies={setMovies} />*/}
+              <EditMovie  />
             </Route>
             <Route path="/movies/:id">
-              <MovieDetails movies={movies} />
+              {/*<MovieDetails movies={movies} />*/}
+              <MovieDetails />
             </Route>
             <Route path="/movies">
             {/*<MovieList movies={movies} setMovies={setMovies} />*/}
@@ -227,7 +228,7 @@ function App() {
             </Route>
             <Route path="/add-movies">
            {/* <AddMovie movies={movies} setMovies={setMovies} /> */}
-              <AddMovie movies={movies} setMovies={setMovies} />
+              <AddMovie />
             </Route>
             <Route path="/color-game">
               <AddColor />
